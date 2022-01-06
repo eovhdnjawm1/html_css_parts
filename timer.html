@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>타이머앱 만들기</title>
+</head>
+<body>
+
+    <span class="timer js-timer">00:00:00</span>
+    <input type="button" class="js-timer__startBtn" value="시작">
+    <input type="button" class="js-timer__stopBtn" value="정지">
+    <input type="button" class="js-timer__resetBtn" value="리셋">
+
+    <script>
+        const timer = document.querySelector('.js-timer');
+        const startBtn = document.querySelector('.js-timer__startBtn');
+        const stopBtn = document.querySelector('.js-timer__stopBtn');
+        const resetBtn = document.querySelector('.js-timer__resetBtn');
+
+        let TIME = 0;
+        let cron;
+
+        function startButton() {
+            updateTimer();
+            stopButtonn();
+            cron = setInterval(updateTimer, 1000);
+            timer.classList.add('start');
+        }
+
+        function stopButtonn() {
+            clearInterval(cron);
+            timer.classList.remove('start');
+        }
+
+        function resetButton(){
+            timer.innerText = `00:00:00`;
+            stopButtonn();
+            timer.classList.remove('start');
+            return (TIME = 0);
+        }
+
+        function updateTimer() {
+            const hours = Math.floor(TIME / 3600);
+            const checkMinutes = Math.floor(TIME / 60);
+            const seconds = TIME % 60;
+            const minutes = checkMinutes % 60;
+
+            timer.innerText = `${hours < 10 ? `0${hours}` : hours}:${
+                minutes < 10 ? `0${minutes}` : minutes
+            }:${seconds < 10 ? `0${seconds}` : seconds}`;
+            TIME++;
+
+            console.log(TIME -1);
+        }
+
+
+            startBtn.addEventListener('click', startButton);
+            stopBtn.addEventListener('click', stopButtonn);
+            resetBtn.addEventListener('click', resetButton);
+
+    </script>
+</body>
+
+</html>
